@@ -1,9 +1,9 @@
 #Create a public IP - bastion
-  resource "azurerm_public_ip" "publicip" {
-    name                = var.public_ip_name
-    location            = var.location
-    resource_group_name = var.resource_group_name
-    allocation_method   = var.public_ip_allocation
+resource "azurerm_public_ip" "publicip" {
+  name                = var.public_ip_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = var.public_ip_allocation
 }
 
 #create a network interface - bastion
@@ -28,7 +28,7 @@ resource "tls_private_key" "pemkey" {
 
 resource "local_file" "name" {
   filename = "${path.module}/cloudtls.pem"
-  content = tls_private_key.pemkey.private_key_pem
+  content  = tls_private_key.pemkey.private_key_pem
 }
 
 #create a linux virtual machine - bastion

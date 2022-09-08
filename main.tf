@@ -40,11 +40,20 @@ module "database" {
   db_admin_password   = var.db_admin_password
 }
 
-module "loadbalance"{
+module "loadbalance" {
   source                        = "./modules/loadbalance"
   resource_group_name           = var.resource_group_name
   location                      = var.location
   application_gateway_subnet_id = module.networking.application_gateway_subnet_id
   websubnet_id                  = module.networking.websubnet_id
   web_nic_id                    = module.compute.web_nic_id
+  web_nic_ip_config_name        = module.compute.web_nic_ip_config_name
+  app_nic_id                    = module.compute.app_nic_id
+  app_nic_ip_config_name        = module.compute.app_nic_ip_config_name
+}
+
+module "security" {
+  source              = "./modules/security"
+  resource_group_name = var.resource_group_name
+  location            = var.location
 }

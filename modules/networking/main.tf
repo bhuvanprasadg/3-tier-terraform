@@ -51,128 +51,147 @@ resource "azurerm_subnet" "application_gateway" {
 }
 
 resource "azurerm_network_security_group" "nsg-web" {
-  name = var.web_nsg_name
-  location = var.location
+  name                = var.web_nsg_name
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.web_nsg_ports[0]
-    direction                   = "Inbound"
-    name                        = "SSH"
-    priority                    = 100
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.web_nsg_ports[0]
+    direction                  = "Inbound"
+    name                       = "SSH"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.web_nsg_ports[1]
-    direction                   = "Inbound"
-    name                        = "HTTP"
-    priority                    = 150
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.web_nsg_ports[1]
+    direction                  = "Inbound"
+    name                       = "HTTP"
+    priority                   = 150
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 }
 
 resource "azurerm_network_security_group" "nsg-app" {
-  name = var.app_nsg_name
-  location = var.location
+  name                = var.app_nsg_name
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.app_nsg_ports[0]
-    direction                   = "Inbound"
-    name                        = "SSH"
-    priority                    = 100
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.app_nsg_ports[0]
+    direction                  = "Inbound"
+    name                       = "SSH"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.app_nsg_ports[1]
-    direction                   = "Inbound"
-    name                        = "HTTP"
-    priority                    = 150
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.app_nsg_ports[1]
+    direction                  = "Inbound"
+    name                       = "HTTP"
+    priority                   = 150
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 }
 
 resource "azurerm_network_security_group" "nsg-bastion" {
-  name = var.db_nsg_name
-  location = var.location
+  name                = var.db_nsg_name
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = "22"
-    direction                   = "Inbound"
-    name                        = "SSH"
-    priority                    = 100
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = "22"
+    direction                  = "Inbound"
+    name                       = "SSH"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 }
 
 resource "azurerm_network_security_group" "nsg-app-gateway" {
-  name = var.application_gateway_nsg_name
-  location = var.location
+  name                = var.application_gateway_nsg_name
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = "80"
-    direction                   = "Inbound"
-    name                        = "HTTP"
-    priority                    = 100
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = "80"
+    direction                  = "Inbound"
+    name                       = "HTTP"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
+  }
+
+  security_rule {
+    access                                     = "Allow"
+    description                                = ""
+    destination_address_prefix                 = "*"
+    destination_address_prefixes               = []
+    destination_application_security_group_ids = []
+    destination_port_range                     = "65200-65535"
+    destination_port_ranges                    = []
+    direction                                  = "Inbound"
+    name                                       = "AllowAnyCustom65200-65535"
+    priority                                   = 110
+    protocol                                   = "*"
+    source_address_prefix                      = "*"
+    source_address_prefixes                    = []
+    source_application_security_group_ids      = []
+    source_port_range                          = "*"
+    source_port_ranges                         = []
   }
 }
 
 resource "azurerm_network_security_group" "nsg-db" {
-  name = var.bastion_nsg_name
-  location = var.location
+  name                = var.bastion_nsg_name
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.db_nsg_ports[0]
-    direction                   = "Inbound"
-    name                        = "PostgreSQL"
-    priority                    = 100
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.db_nsg_ports[0]
+    direction                  = "Inbound"
+    name                       = "PostgreSQL"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 
   security_rule {
-    access                      = "Allow"
-    destination_address_prefix  = "*"
-    destination_port_range      = var.db_nsg_ports[1]
-    direction                   = "Inbound"
-    name                        = "HTTP"
-    priority                    = 150
-    protocol                    = "Tcp"
-    source_address_prefix       = "*"
-    source_port_range           = "*"
+    access                     = "Allow"
+    destination_address_prefix = "*"
+    destination_port_range     = var.db_nsg_ports[1]
+    direction                  = "Inbound"
+    name                       = "HTTP"
+    priority                   = 150
+    protocol                   = "Tcp"
+    source_address_prefix      = "*"
+    source_port_range          = "*"
   }
 }
 
