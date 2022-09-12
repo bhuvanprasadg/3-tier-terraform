@@ -27,7 +27,7 @@ resource "tls_private_key" "pemkey" {
 }
 
 resource "local_file" "name" {
-  filename = "${path.module}/cloudtls.pem"
+  filename = "${path.module}/sshkey.pem"
   content  = tls_private_key.pemkey.private_key_pem
 }
 
