@@ -8,11 +8,23 @@ terraform {
     }
   }
 
+  cloud {
+    organization = "bhuvanprasad"
+
+    workspaces {
+      name = "example-workspace"
+    }
+  }
+
   required_version = ">= 1.1.0"
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = true
+    }
+  }
 
   subscription_id = var.subscription_id
   client_id       = var.client_id
